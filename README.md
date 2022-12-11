@@ -90,6 +90,7 @@ query {
   me{
     id
     name
+    picture
   }
 }
 ```

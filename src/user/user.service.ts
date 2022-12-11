@@ -8,7 +8,7 @@ import { User } from './user.model';
 export class UserService {
     oauthClient: Auth.OAuth2Client;
     constructor(
-       private readonly prisma: PrismaService
+        private readonly prisma: PrismaService
     ) {
         const clientID = process.env.CLIENT_ID;
         const clientSecret = process.env.CLIENT_SECRET
@@ -17,17 +17,16 @@ export class UserService {
             clientID,
             clientSecret,
         );
-
     }
 
     async authenticate(token: string, res) {
         //token : you should get this access token from client side , then get profile data from it
         const tokenInfo = await this.oauthClient.verifyIdToken({ idToken: token });
-        
+
         const email = tokenInfo.getPayload().email;
 
         try { //signIn level
-            const user = await this.prisma.user.findUnique({where:{email}});
+            const user = await this.prisma.user.findUnique({ where: { email } });
             if (!user) {            //signUp level
                 return this.registerUser(token, email, res);
             }
@@ -40,12 +39,12 @@ export class UserService {
         }
     }
 
-    async handleRegisteredUser(user:User, res) {
+    async handleRegisteredUser(user: User, res) {
         const refreshToken = createRefreshToken(user.id, user.tokenVersion);
         const accessToken = createAccessToken(user.id, user.type);
 
         await sendRefereshToken(res, refreshToken);
-        
+
         return {
             accessToken,
             refreshToken,
@@ -64,24 +63,25 @@ export class UserService {
         const userData = await this.getUserData(token);
 
         const name = userData.name;
+        const picture = userData.picture
 
-        const user = await this.createWithGoogle(email, name);
+        const user = await this.createWithGoogle(email, name, picture);
 
         return this.handleRegisteredUser(user, res);
     }
 
-  async createWithGoogle(email: string, name: string) {
+    async createWithGoogle(email: string, name: string, picture: string) {
 
-    const user = await this.prisma.user.create({
-        data: {
-            name,email
-        }
-    })
+        const user = await this.prisma.user.create({
+            data: {
+                name, email, picture
+            }
+        })
 
-    return user;
-}
+        return user;
+    }
 
-    async me(id:string): Promise<User> { 
+    async me(id: string): Promise<User> {
         return await this.prisma.user.findUnique({
             where: { id: id },
         }).catch((err) => { throw new Error("You are not logged in") });
