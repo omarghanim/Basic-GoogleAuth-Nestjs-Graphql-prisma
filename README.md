@@ -29,7 +29,26 @@
 ## Installation
 
 ```bash
+# install package.json
 $ npm install
+
+#Edit your env file
+$ DATABASE_URL=your_db_url
+$ ACCESS_TOKEN=write_any_token
+$ REFRESH_TOKEN=write_any_token
+$ CLIENT_ID=write_your_google_clientId
+$ CLIENT_SECRET=write_your_google_client_secret
+
+```
+
+## Setup & Migrate PostgreSQL DB
+
+```bash
+# migrate
+$ npm run migrate:dev
+
+# prisma generate
+$ npx prisma generate
 ```
 
 ## Running the app
@@ -40,23 +59,30 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+## Go to GraphQL Playground
+go to http://localhost:5000 (5000 is our port you can change it)
 
-```bash
-# unit tests
-$ npm run test
+#write the following mutation :
+mutation {
+  authenticateWithGoogle(token:""){
+    accessToken  # you should get access_token that we w'll use it inside our app.
+    #refreshToken
+  }
+}
+then go down to "Http Headers" and paste your access_token we got it as the following:
+{
+  "Authorization":"Bearer ${access_token}"
+}
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+#Then execute following query to check if you are logged in
+query {
+  me{
+    id
+    name
+  }
+}
 
 ## Support
 

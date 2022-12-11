@@ -21,7 +21,7 @@ export class UserService {
     }
 
     async authenticate(token: string, res) {
-
+        //token : you should get this access token from client side , then get profile data from it
         const tokenInfo = await this.oauthClient.verifyIdToken({ idToken: token });
         
         const email = tokenInfo.getPayload().email;
@@ -81,7 +81,7 @@ export class UserService {
     return user;
 }
 
-    async me(id): Promise<User> {
+    async me(id:string): Promise<User> { 
         return await this.prisma.user.findUnique({
             where: { id: id },
         }).catch((err) => { throw new Error("You are not logged in") });
