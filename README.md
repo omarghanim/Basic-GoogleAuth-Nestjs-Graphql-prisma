@@ -64,13 +64,15 @@ $ npm run start:dev
 ## Go to GraphQL Playground
 go to http://localhost:5000 (5000 is our port you can change it)
 
+```bash
 #write the following mutation :
 mutation {
-  authenticateWithGoogle(token:""){
+  authenticateWithGoogle(token:"${token_you_get_from_client_side}"){
     accessToken  # you should get access_token that we w'll use it inside our app.
     #refreshToken
   }
 }
+
 then go down to "Http Headers" and paste your access_token we got it as the following:
 {
   "Authorization":"Bearer ${access_token}"
@@ -83,6 +85,7 @@ query {
     name
   }
 }
+```
 
 ## Support
 
