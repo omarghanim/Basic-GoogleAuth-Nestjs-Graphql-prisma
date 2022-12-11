@@ -27,12 +27,12 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## We are using the following tech. in our app
-
+```bash
 -Nestjs
 -Prisma Client (with PostgreSQL)
 -GraphQL
 -Googleapis package
-
+```
 ## Installation
 
 ```bash
