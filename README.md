@@ -26,6 +26,13 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## We are using the following tech. in our app
+
+-Nestjs
+-Prisma Client (with PostgreSQL)
+-GraphQL
+-Googleapis package
+
 ## Installation
 
 ```bash
@@ -44,7 +51,7 @@ $ CLIENT_SECRET=write_your_google_client_secret
 ## Setup & Migrate PostgreSQL DB
 
 ```bash
-# migrate
+# migrate prisma schema
 $ npm run migrate:dev
 
 # prisma generate
