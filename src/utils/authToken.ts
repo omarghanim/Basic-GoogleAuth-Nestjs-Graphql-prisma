@@ -17,10 +17,10 @@ export const createRefreshToken = (userId, tokenVersion) => {
   );
 };
 
-export const sendRefereshToken = (res, token) => {
+export const sendRefereshToken = (res, token:string) => {
   if (process.env.NODE_ENV == 'prod') {
     // you can not use  sameSite: "None" without  secure: true  so if using different domain name between frontend and backend you need to install ssl
-    return res.cookie('ysfa', token, {
+    return res.cookie('cookiesecret', token, {
       httpOnly: true,
       maxAge: 604800000, // 7 days (ms)
       signed: true,
@@ -30,7 +30,7 @@ export const sendRefereshToken = (res, token) => {
     });
   } else {    
     // you can not use  sameSite: "None" without  secure: true  so if using different domain name between frontend and backend you need to install ssl
-    return res.cookie('ysfa', token, {
+    return res.cookie('cookiesecret', token, {
       httpOnly: true,
       maxAge: 604800000,
       path: '/refresh',
